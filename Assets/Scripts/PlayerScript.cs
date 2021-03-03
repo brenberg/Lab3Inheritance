@@ -7,105 +7,97 @@ public class PlayerScript : MonoBehaviour
     public Rigidbody rb;
     public float thrust;
     public float moveSpeed;
-    private float YRot;
-    private float rotSpeed;
     public static float staticSpeed;
     public static float staticThrust;
+
+    Animator anim;
 
     // Start is called before the first frame update
     void Start()
     {
         moveSpeed = 0.01f;
-        rotSpeed = 1f;
-        thrust = 4;
+        thrust = 0.05f;
         rb = GetComponent<Rigidbody>();
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        //MAX WEIGHT
 
-        //OLD WAY
-        //staticSpeed = moveSpeed;
+        if (BoxParent.TotalWeight == 6f)
+        {
+            thrust = 0.05f;
+        }
+        else if (BoxParent.TotalWeight == 5f)
+        {
+            thrust = 0.1f;
+        }
+        else if (BoxParent.TotalWeight == 4f)
+        {
+            thrust = 0.5f;
+        }
+        else if (BoxParent.TotalWeight == 3f)
+        {
+            thrust = 1f;
+        }
+        else if (BoxParent.TotalWeight == 2f)
+        {
+            thrust = 2f;
+        }
+        else if (BoxParent.TotalWeight == 1f)
+        {
+            thrust = 3f;
+        }
+        else if (BoxParent.TotalWeight == 0f)
+        {
+            thrust = 4f;
+        }
 
-        //transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-        //transform.rotation = Quaternion.Euler(transform.rotation.x, YRot , transform.rotation.z);
+        if(BoxParent.TotalWeight >= 1)
+        {
+            anim.SetBool("HoldingCheck", true);
+        }
 
-        //if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
-        //{
-        //    transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + moveSpeed);
-        //    moveSpeed = 0.01f;
-        //}
+        if (BoxParent.TotalWeight <= 0)
+        {
+            anim.SetBool("HoldingCheck", false);
+        }
 
-        //else if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-        //{
-        //    YRot -= rotSpeed;
-        //}
-
-        //else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
-        //{
-        //    transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - moveSpeed);
-        //    moveSpeed = 0.01f;
-        //}
-
-        //else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-        //{
-        //    YRot += rotSpeed;
-        //}
-
-        //else
-        //{
-        //    moveSpeed = 0f;
-        //}
+        //MOVEMENT
 
         staticThrust = thrust;
 
-        if (Input.GetMouseButton(0))
-        {
-            Debug.Log("FORWARD");
-            rb.AddForce(transform.forward * thrust);
-        }
-
         if (Input.GetKey(KeyCode.W))
         {
-            transform.rotation = Quaternion.Euler(0, 0, 0);
-
-            Debug.Log("FORWARD");
             rb.AddForce(transform.forward * thrust);
+            anim.SetFloat("WalkSpeed", 1);
         }
 
-        if (Input.GetKey(KeyCode.A))
+        else if (Input.GetKey(KeyCode.A))
         {
-            transform.rotation = Quaternion.Euler(0, 270, 0);
-
-            rb.AddForce(transform.forward * thrust);
+            rb.AddForce(transform.right * -thrust);
+            anim.SetFloat("WalkSpeed", 1);
         }
 
-        if (Input.GetKey(KeyCode.S))
+        else if (Input.GetKey(KeyCode.S))
         {
-            transform.rotation = Quaternion.Euler(0, 180, 0);
-
-            rb.AddForce(transform.forward * thrust);
+            rb.AddForce(transform.forward * -thrust);
+            anim.SetFloat("WalkSpeed", 1);
         }
 
-        if (Input.GetKey(KeyCode.D))
+        else if (Input.GetKey(KeyCode.D))
         {
-            transform.rotation = Quaternion.Euler(0, 90, 0);
+            rb.AddForce(transform.right * thrust);
+            anim.SetFloat("WalkSpeed", 1);
 
-            rb.AddForce(transform.forward * thrust);
         }
 
-        //if(Input.GetAxis("Horizontal"))
-        //{
-
-        //}
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
+        else
         {
-
+            rb.velocity = (Vector3.zero);
+            anim.SetFloat("WalkSpeed", 0);
         }
     }
 }
