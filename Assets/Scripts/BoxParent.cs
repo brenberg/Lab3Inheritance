@@ -44,7 +44,7 @@ public class BoxParent : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         //Debug.Log("TriggerEnter");
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.E))
         {
             boxPickedUp = true;
             addWeight = true;

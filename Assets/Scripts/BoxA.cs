@@ -45,7 +45,7 @@ public class BoxA : BoxParent
             addWeight = false;
         }
 
-        if (boxPickedUp == true && Input.GetKeyDown(KeyCode.C))
+        if (boxPickedUp == true && Input.GetKeyDown(KeyCode.Space))
         {
             i = 0;
             throwB = true;
