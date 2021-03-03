@@ -25,34 +25,37 @@ public class PlayerScript : MonoBehaviour
     void Update()
     {
         //MAX WEIGHT
-
-        if (BoxParent.TotalWeight == 6f)
-        {
-            thrust = 0.05f;
-        }
-        else if (BoxParent.TotalWeight == 5f)
-        {
-            thrust = 0.1f;
-        }
-        else if (BoxParent.TotalWeight == 4f)
-        {
-            thrust = 0.5f;
-        }
-        else if (BoxParent.TotalWeight == 3f)
-        {
-            thrust = 1f;
-        }
-        else if (BoxParent.TotalWeight == 2f)
+        if (BoxParent.TotalWeight >= 7f)
         {
             thrust = 2f;
         }
-        else if (BoxParent.TotalWeight == 1f)
+        else if (BoxParent.TotalWeight == 6f)
+        {
+            thrust = 2.5f;
+        }
+        else if (BoxParent.TotalWeight == 5f)
         {
             thrust = 3f;
         }
-        else if (BoxParent.TotalWeight == 0f)
+        else if (BoxParent.TotalWeight == 4f)
+        {
+            thrust = 3.5f;
+        }
+        else if (BoxParent.TotalWeight == 3f)
         {
             thrust = 4f;
+        }
+        else if (BoxParent.TotalWeight == 2f)
+        {
+            thrust = 4.5f;
+        }
+        else if (BoxParent.TotalWeight == 1f)
+        {
+            thrust = 5f;
+        }
+        else if (BoxParent.TotalWeight == 0f)
+        {
+            thrust = 6f;
         }
 
         if(BoxParent.TotalWeight >= 1)
